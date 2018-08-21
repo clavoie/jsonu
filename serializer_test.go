@@ -3,12 +3,23 @@ package jsonu_test
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"reflect"
 	"strings"
 	"testing"
 
 	"github.com/clavoie/jsonu"
 )
+
+type ErrType int
+
+func (et ErrType) MarshalJSON() ([]byte, error) {
+	return nil, errors.New("error")
+}
+
+func (et *ErrType) UnmarshalJSON(data []byte) error {
+	return errors.New("error")
+}
 
 func TestSerializer(t *testing.T) {
 	type Struct struct {
@@ -53,6 +64,19 @@ func TestSerializer(t *testing.T) {
 
 		if bytes.Equal(serializeBytes, actualBytes) == false {
 			t.Fatal(serializeStr, string(actualBytes))
+		}
+	})
+
+	t.Run("ToBytesErr", func(t *testing.T) {
+		errStruct := &struct {
+			Err ErrType
+		}{
+			Err: 100,
+		}
+		_, err := serializer.ToBytes(errStruct)
+
+		if err == nil {
+			t.Fatal("was expecting err")
 		}
 	})
 }
