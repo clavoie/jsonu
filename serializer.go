@@ -3,6 +3,7 @@ package jsonu
 import (
 	"bytes"
 	"encoding/json"
+	"strings"
 )
 
 // Serializer encodes to and from []byte to json objects
@@ -38,8 +39,8 @@ func (js *serializer) ToBytes(data interface{}) ([]byte, error) {
 	err := encoder.Encode(data)
 
 	if err == nil {
-		return buffer.Bytes(), nil
+		return []byte(strings.TrimSpace(string(buffer.Bytes()))), nil
 	}
 
-	return []byte{}, err
+	return nil, err
 }

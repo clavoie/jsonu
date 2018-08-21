@@ -4,6 +4,6 @@ import "github.com/clavoie/di"
 
 func NewDiDefs() []*di.Def {
 	return []*di.Def{
-		{newJson, di.Singleton},
+		{NewSerializer, di.Singleton},
 	}
 }
