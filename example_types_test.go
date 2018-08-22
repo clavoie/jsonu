@@ -7,7 +7,7 @@ import (
 	"github.com/clavoie/jsonu"
 )
 
-func ExampleTypes() {
+func ExampleSerializer_types() {
 	type Struct struct {
 		Integer    jsonu.Int
 		Floating32 jsonu.Float32
