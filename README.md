@@ -14,9 +14,8 @@ Some client side JSON libraries quote numbers they serialize in AJAX requests. G
   }
   
   quotedJson := `{"Integer":"10","Floating32":"88.8","Floating64":"99.1"}`
-  decodeStruct = new(Struct)
-  decoder = json.NewDecoder(strings.NewReader(quotedJson))
-  err = decoder.Decode(decodeStruct)
+  decodeStruct := new(Struct)
+  err := jsonu.FromBytes([]byte(quotedJson), decodeStruct)
   
   // err will be nil
   // decodeStruct.Integer == 10
